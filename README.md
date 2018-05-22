@@ -9,16 +9,16 @@ Frontend is made with angular 5 and server-side with Symfony 3.4
 
 You can upload a file with a structure:
 
-1. Question: \n
-Answer1, \n
-Answer2,\n
-Answer3,\n
+1. Question: 
+Answer1, 
+Answer2,
+Answer3,
 ...
 \n
 
-2. <>: \n
-...,\n
-...,\n
+2. <>:
+...,
+...,
 
 on route /upload
 
