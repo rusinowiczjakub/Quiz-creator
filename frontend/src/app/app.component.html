@@ -7,8 +7,22 @@
   <button class="btn btn-success" (click)="showQuestion()">Rozpocznij</button>
 </div>
 
+<div *ngIf="isDone" class="container" style="height: 100vh">
+  <div class="card text-center" style="width: 70%;">
+    <div class="card-header">
+      Zakończono!
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">Twój wynik:</h5>
+      <p class="card-text">{{ getResult() }}%</p>
+      <a (click)="reset()" class="btn btn-primary" style="width: 100px; color: white" >Zakończ</a>
+    </div>
+  </div>
+</div>
+
+
 <div *ngIf="question" style="height: 100vh" class="container justify-content-center align-items-center">
-  <div *ngIf="!isDone">
+  <div *ngIf="!isDone; else end">
   <h4 *ngIf="(questionsIds.length > 0)">Poprawne odpowiedzi: {{ correctAnswers }} / {{ sliderValue }}</h4>
     <div class="card" style="width: 100%;">
       <div class="card-body">
@@ -19,17 +33,8 @@
     <div [@loadAnimation]="question.answers.length" style="width: 100%">
       <button *ngFor="let answer of question?.answers" (click)="checkAnswer(answer)" type="button" class="btn btn-{{ answer.isChecked ? (answer.isCorrect ? 'success' : 'danger') : 'primary' }} " style="width: 100%; margin-top: 10px; margin-bottom: 10px">{{ answer.content }}</button>
     </div>
-  </div>
-</div>
-<div *ngIf="isDone" class="container" style="height: 100vh">
-    <div class="card text-center" style="width: 70%;">
-      <div class="card-header">
-        Zakończono!
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">Twój wynik:</h5>
-        <p class="card-text">{{ getResult() }}%</p>
-        <a (click)="reset()" class="btn btn-primary" style="width: 100px; color: white" >Zakończ</a>
-      </div>
+    <div>
+      <button *ngIf="(isChecked)" type="button" class="btn btn-success" (click)="showQuestion()" style="margin-top: 20px">Następne pytanie</button>
     </div>
+  </div>
 </div>

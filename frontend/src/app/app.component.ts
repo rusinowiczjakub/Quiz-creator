@@ -32,11 +32,14 @@ export class AppComponent{
   correctAnswers: number = 0;
   sliderValue: number = 1;
   isDone: boolean = false;
+  isChecked: boolean = false;
 
   constructor(private questionService: QuestionService) {
   }
 
   showQuestion() {
+    this.isChecked = false;
+    this.question = null;
     if (this.questionsIds.length < this.sliderValue) {
       this.questionService.getQuestion().subscribe((data: Question) => {
         if (this.questionsIds.indexOf(data.id) !== -1) {
@@ -56,6 +59,7 @@ export class AppComponent{
   }
 
   checkAnswer(elem: Answer) {
+    this.isChecked = true;
     elem.isChecked = true;
 
     this.question.answers.forEach((e) => {
@@ -67,11 +71,6 @@ export class AppComponent{
     if (elem.isCorrect) {
       this.correctAnswers++;
     }
-
-    setTimeout(() => {
-      this.question = null;
-      this.showQuestion();
-    }, 1000)
   }
 
   changeSliderVal(e) {
@@ -88,5 +87,6 @@ export class AppComponent{
     this.correctAnswers = 0;
     this.sliderValue = 1;
     this.isDone = false;
+    this.isChecked = false;
   }
 }
