@@ -53,9 +53,16 @@ class FileParser {
 				foreach ($singleArray[1] as $answerContent) {
 					if (strlen($answerContent) > 2) {
 						$answer = new Answer();
-						$answer->setContent($answerContent);
+
 						$answer->setQuestion($question);
-						$answer->setIsCorrect(false);
+						if (strpos($answerContent,"|") !== false) {
+							$answer->setContent(str_replace("|", "", $answerContent));
+							$answer->setIsCorrect(true);
+						} else {
+							$answer->setContent($answerContent);
+							$answer->setIsCorrect(false);
+						}
+
 						$question->addAnswer($answer);
 
 						$this->entityManager->persist($answer);

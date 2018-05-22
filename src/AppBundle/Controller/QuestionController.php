@@ -25,6 +25,7 @@ class QuestionController extends Controller
 	/**
 	 * @param FileParser $fileParser
 	 * @return Response
+	 * @throws \Doctrine\ORM\ORMException
 	 * @throws \Doctrine\ORM\OptimisticLockException
 	 *
 	 * @Route("/upload", name="upload")
