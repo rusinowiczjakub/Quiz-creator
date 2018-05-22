@@ -1,20 +1,35 @@
 
-<h3>Poprawne odpowiedzi: {{ correctAnswers }} / {{ questionsIds.length }}</h3>
-<div *ngIf="!question" class="container" style="height: 100vh">
+<div *ngIf="(questionsIds.length < 1)" class="container" style="height: 100vh">
+  <div class="slidecontainer">
+    <div>Ilość pytań: </div><h5>{{ sliderValue }}</h5>
+    <input type="range" min="1" max="100" (change)="changeSliderVal($event)" value="1" class="slider" id="myRange">
+  </div>
   <button class="btn btn-success" (click)="showQuestion()">Rozpocznij</button>
 </div>
 
 <div *ngIf="question" style="height: 100vh" class="container justify-content-center align-items-center">
+  <div *ngIf="!isDone">
+  <h4 *ngIf="(questionsIds.length > 0)">Poprawne odpowiedzi: {{ correctAnswers }} / {{ sliderValue }}</h4>
     <div class="card" style="width: 100%;">
       <div class="card-body">
         <h5 class="card-title">Pytanie nr {{ questionsIds?.length }}</h5>
         <p class="card-text">{{ question?.content }}</p>
       </div>
     </div>
-    <div *ngIf="isChecked; else not_checked">
-      <button *ngFor="let answer of question?.answers" (click)="checkAnswer(answer)" type="button" class="btn btn-{{ answer.isCorrect ? 'success' : 'danger' }} " style="width: 100%; margin-top: 10px; margin-bottom: 10px">{{ answer.content }}</button>
+    <div [@loadAnimation]="question.answers.length" style="width: 100%">
+      <button *ngFor="let answer of question?.answers" (click)="checkAnswer(answer)" type="button" class="btn btn-{{ answer.isChecked ? (answer.isCorrect ? 'success' : 'danger') : 'primary' }} " style="width: 100%; margin-top: 10px; margin-bottom: 10px">{{ answer.content }}</button>
     </div>
-  <ng-template #not_checked>
-    <button *ngFor="let answer of question?.answers" (click)="checkAnswer(answer)" type="button" class="btn btn-primary" style="width: 100%; margin-top: 10px; margin-bottom: 10px">{{ answer.content }}</button>
-  </ng-template>
+  </div>
+</div>
+<div *ngIf="isDone" class="container" style="height: 100vh">
+    <div class="card text-center" style="width: 70%;">
+      <div class="card-header">
+        Zakończono!
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">Twój wynik:</h5>
+        <p class="card-text">{{ getResult() }}%</p>
+        <a (click)="reset()" class="btn btn-primary" style="width: 100px; color: white" >Zakończ</a>
+      </div>
+    </div>
 </div>

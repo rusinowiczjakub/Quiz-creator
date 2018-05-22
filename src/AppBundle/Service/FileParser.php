@@ -39,6 +39,7 @@ class FileParser {
 
 	/**
 	 * @param array $questionsArray
+	 * @throws \Doctrine\ORM\ORMException
 	 * @throws \Doctrine\ORM\OptimisticLockException
 	 */
 	public function savePositionToDb(array $questionsArray) {
@@ -54,6 +55,7 @@ class FileParser {
 						$answer = new Answer();
 						$answer->setContent($answerContent);
 						$answer->setQuestion($question);
+						$answer->setIsCorrect(false);
 						$question->addAnswer($answer);
 
 						$this->entityManager->persist($answer);

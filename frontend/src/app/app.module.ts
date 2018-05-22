@@ -3,9 +3,9 @@ import { NgModule } from '@angular/core';
 
 
 import { AppComponent } from './app.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
 import { QuestionService } from './question.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -14,9 +14,8 @@ import { QuestionService } from './question.service';
   ],
   imports: [
     BrowserModule,
-    NgbModule,
-    NgbModule.forRoot(),
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule
   ],
   providers: [QuestionService],
   bootstrap: [AppComponent]
