@@ -6,12 +6,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Question
+ * QuestionHandler
  *
  * @ORM\Table(name="question")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\QuestionRepository")
  */
-class Question
+class Question implements \JsonSerializable
 {
     /**
      * @var int
@@ -85,6 +85,14 @@ class Question
 	 */
 	public function addAnswer($answer) {
 		$this->answers[]= $answer;
+	}
+
+	public function jsonSerialize() {
+		return [
+			'id' => $this->id,
+			'content' => $this->content,
+			'answers' => $this->answers->toArray()
+		];
 	}
 
 

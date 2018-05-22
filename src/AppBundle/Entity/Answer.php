@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="answer")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\AnswerRepository")
  */
-class Answer
+class Answer implements \JsonSerializable
 {
     /**
      * @var int
@@ -114,6 +114,14 @@ class Answer
 	 */
 	public function setQuestion($question) {
 		$this->question = $question;
+	}
+
+	public function jsonSerialize() {
+		return [
+			'id' => $this->id,
+			'content' => $this->content,
+			'isCorrect' => $this->isCorrect,
+		];
 	}
 
 
